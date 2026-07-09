@@ -562,36 +562,41 @@ img{display:block;max-width:100%}
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
 }
 
-/* Centered Desktop Notice */
+/* Centered Desktop Notice Alert Badge */
 .pre-desktop-notice {
   position: absolute;
-  bottom: 24px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.14em;
+  font-size: 9px;
+  color: var(--r); /* Glowing theme accent green */
+  background: rgba(71, 232, 76, 0.04);
+  border: 1px solid rgba(71, 232, 76, 0.18);
+  padding: 8px 18px;
+  border-radius: 4px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   z-index: 3;
   pointer-events: none;
   white-space: nowrap;
   text-align: center;
+  box-shadow: 0 0 10px rgba(71, 232, 76, 0.06), inset 0 0 12px rgba(71, 232, 76, 0.03);
   transition: opacity 0.5s ease;
 }
 
 .notice-accent {
   color: var(--r);
-  margin-right: 4px;
-  font-size: 8px;
+  margin-right: 6px;
+  font-size: 10px;
   display: inline-block;
   vertical-align: middle;
-  animation: pulse-glow 1.5s ease-in-out infinite alternate;
+  animation: warning-blink 1s steps(2) infinite;
 }
 
-@keyframes pulse-glow {
-  0% { opacity: 0.35; }
-  100% { opacity: 1; }
+@keyframes warning-blink {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
 }
 
 /* Mobile Responsive Adapters for preloader & performance safeguards */
@@ -619,12 +624,13 @@ img{display:block;max-width:100%}
     filter: blur(2px);
   }
   .pre-desktop-notice {
-    bottom: 16px;
-    font-size: 7px;
-    color: rgba(255, 255, 255, 0.45);
+    bottom: 20px;
+    font-size: 7.5px;
+    color: var(--r);
     white-space: normal;
-    width: calc(100% - 56px);
+    width: calc(100% - 64px);
     line-height: 1.4;
+    padding: 6px 12px;
   }
 }
 @media (max-width: 480px) {
