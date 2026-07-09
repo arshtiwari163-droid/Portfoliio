@@ -562,6 +562,40 @@ img{display:block;max-width:100%}
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
 }
 
+/* Mobile Responsive Adapters for preloader & performance safeguards */
+@media (max-width: 768px) {
+  #preloader {
+    padding: 36px 28px;
+  }
+  .ch-left { left: 16px; }
+  .ch-right { right: 16px; }
+  .loading-text {
+    font-size: clamp(12px, 4.5vw, 24px);
+    letter-spacing: 0.12em;
+  }
+  .explore-split, .loading-split {
+    height: 80px;
+  }
+  .hud-progress-wrap {
+    width: 90px;
+  }
+  /* Reduce blur weight on mobile to avoid layout compositing lag */
+  .card-motion {
+    filter: blur(4px);
+  }
+  .svc-scroll-card[data-service="07"]:hover .card-motion {
+    filter: blur(2px);
+  }
+}
+@media (max-width: 480px) {
+  .hud-meta {
+    font-size: 8px;
+  }
+  .hud-sub {
+    font-size: 7px;
+  }
+}
+
 @keyframes fadeInUp{
   from{opacity:0;transform:translate3d(0,20px,0)}
   to{opacity:1;transform:translate3d(0,0,0)}
@@ -2184,6 +2218,131 @@ img{display:block;max-width:100%}
   font-weight: 600;
   margin-right: 4px;
 }
+
+.tl-read-more-btn {
+  display: none; /* Hidden on PC view */
+}
+
+@media (max-width: 768px) {
+  .card-matrix {
+    display: none !important;
+  }
+  
+  .sc-widget {
+    display: none !important;
+  }
+  
+  .tl-item {
+    padding: 24px 20px;
+    border-left: 3px solid rgba(71, 232, 76, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(14, 14, 14, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.01);
+    border-radius: 10px;
+  }
+  
+  .tl-item.expanded {
+    border-left-color: var(--r);
+    background: rgba(18, 18, 18, 0.7);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 15px var(--r-dim);
+  }
+
+  /* Cybernetic bracket accent at top-right of cards */
+  .tl-item::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 6px;
+    height: 6px;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .tl-item:hover::after, .tl-item.expanded::after {
+    border-color: var(--r);
+  }
+
+  .tl-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .tl-title {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  .tl-company {
+    font-size: 11px;
+  }
+
+  .tl-date-badge {
+    align-self: flex-start;
+  }
+
+  /* Tactical HUD button style */
+  .tl-read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(71, 232, 76, 0.03);
+    border: 1px solid rgba(71, 232, 76, 0.18);
+    padding: 8px 18px;
+    border-radius: 6px;
+    color: var(--r);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 8px rgba(71, 232, 76, 0.05);
+  }
+
+  .tl-read-more-btn:active {
+    background: rgba(71, 232, 76, 0.1);
+    border-color: var(--r);
+    box-shadow: 0 0 12px var(--r-glow);
+  }
+  
+  .tl-arrow-icon {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .tl-bullets {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0 !important;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.4s ease,
+                margin-top 0.4s ease;
+  }
+  
+  .tl-item.expanded .tl-bullets {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 16px !important;
+  }
+  
+  .tl-item.expanded .tl-arrow-icon {
+    transform: rotate(180deg);
+  }
+}
 .exp-right{
   display:flex;flex-direction:column;gap:12px;
   position: sticky;
@@ -2360,7 +2519,12 @@ img{display:block;max-width:100%}
   border-radius: 30px;
   box-shadow: 0 0 15px var(--r-glow);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: none;
+  cursor: default;
+}
+@media (hover: hover) {
+  .contact-instagram-btn {
+    cursor: none;
+  }
 }
 
 .contact-instagram-btn:hover {
@@ -2629,14 +2793,65 @@ img{display:block;max-width:100%}
 }
 .edit-card:hover .edit-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
 
+.edits-slider-indicator {
+  display: none;
+  width: 120px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 24px auto 0;
+  position: relative;
+  border-radius: 1px;
+}
+
+.indicator-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 33.33%;
+  background: var(--r);
+  border-radius: inherit;
+  transform: translateX(0);
+  transition: transform 0.1s ease;
+  box-shadow: 0 0 8px var(--r-glow);
+}
+
 @media(max-width:1000px){
-  .edits-grid{grid-template-columns:repeat(3,1fr)}
+  .edits-grid{grid-template-columns:repeat(3,1fr); gap:24px; padding:0 32px;}
 }
-@media(max-width:700px){
-  .edits-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:400px){
-  .edits-grid{grid-template-columns:1fr}
+@media(max-width:768px){
+  .edits-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 20px 32px 10px;
+    margin: 40px 0 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-width: none;
+  }
+  
+  .edits-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .edit-card {
+    flex: 0 0 280px;
+    max-width: 78vw;
+    scroll-snap-align: center;
+    aspect-ratio: 9/16;
+  }
+  
+  .edit-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .edits-slider-indicator {
+    display: block;
+  }
 }
 
 
@@ -3040,6 +3255,12 @@ img{display:block;max-width:100%}
 }
 
 @media (max-width: 767px) {
+  .modal-overlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba(9, 9, 9, 0.94);
+    padding: 16px;
+  }
   .modal-visuals {
     grid-template-columns: 1fr;
   }
@@ -3049,6 +3270,7 @@ img{display:block;max-width:100%}
   }
   .modal-card {
     padding: 32px 24px;
+    max-height: 94vh;
   }
 }
 
@@ -4350,6 +4572,11 @@ img{display:block;max-width:100%}
     </div>
 
   </div>
+  
+  <!-- Interactive Mobile Scroll Progress Bar -->
+  <div class="edits-slider-indicator">
+    <div class="indicator-bar-fill" id="editsProgress"></div>
+  </div>
 </section>
 
 <!-- ═══ STACK ═══ -->
@@ -4542,6 +4769,11 @@ img{display:block;max-width:100%}
                 <strong>Analytics &amp; Outreach:</strong> Monitor campaign performance metrics, manage audience outreach, and optimize digital marketing initiatives to maximize reach and conversion rates.
               </div>
             </div>
+            <!-- Read More (mobile only) -->
+            <button class="tl-read-more-btn" onclick="toggleTimelineItem(this)">
+              <span>Read More</span>
+              <svg class="tl-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            </button>
           </div>
 
           <!-- Job 2 -->
@@ -4567,6 +4799,11 @@ img{display:block;max-width:100%}
                 <strong>Technical Delivery:</strong> Oversee the translation of complex client requirements into elegant, robust digital solutions, ensuring all deliverables meet high-fidelity standards.
               </div>
             </div>
+            <!-- Read More (mobile only) -->
+            <button class="tl-read-more-btn" onclick="toggleTimelineItem(this)">
+              <span>Read More</span>
+              <svg class="tl-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            </button>
           </div>
 
           <!-- Job 3 -->
@@ -4598,6 +4835,11 @@ img{display:block;max-width:100%}
                 <strong>Featured Architecture | Agentic AI Systems:</strong> Engineered sophisticated backend automation systems utilizing n8n, LangGraph, and Supabase for large language model (LLM) orchestration and intelligent data processing.
               </div>
             </div>
+            <!-- Read More (mobile only) -->
+            <button class="tl-read-more-btn" onclick="toggleTimelineItem(this)">
+              <span>Read More</span>
+              <svg class="tl-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            </button>
           </div>
 
           <!-- Job 4 -->
@@ -4620,6 +4862,11 @@ img{display:block;max-width:100%}
                 <strong>Cross-Functional Execution:</strong> Oversaw end-to-end interface design and architectural planning, ensuring seamless collaboration to deliver innovative applications from ideation to final pitch.
               </div>
             </div>
+            <!-- Read More (mobile only) -->
+            <button class="tl-read-more-btn" onclick="toggleTimelineItem(this)">
+              <span>Read More</span>
+              <svg class="tl-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -6291,6 +6538,32 @@ if (window.innerWidth > 1024 && !('ontouchstart' in window)) {
 
   init();
   animate();
+  // Mobile swipeable indicator script
+  (function() {
+    const editsGrid = document.querySelector('.edits-grid');
+    const editsProgress = document.getElementById('editsProgress');
+    if (editsGrid && editsProgress) {
+      editsGrid.addEventListener('scroll', () => {
+        const maxScroll = editsGrid.scrollWidth - editsGrid.clientWidth;
+        if (maxScroll > 0) {
+          const scrollPct = editsGrid.scrollLeft / maxScroll;
+          // Map scrollPct (0 to 1) to transform translateX (0% to 200% since indicator fill is 33.33% width)
+          editsProgress.style.transform = `translateX(${scrollPct * 200}%)`;
+        }
+      }, { passive: true });
+    }
+  })();
+
+  // Mobile timeline toggle script
+  window.toggleTimelineItem = function(btn) {
+    const item = btn.closest('.tl-item');
+    if (!item) return;
+    const isExpanded = item.classList.toggle('expanded');
+    const label = btn.querySelector('span');
+    if (label) {
+      label.textContent = isExpanded ? 'Read Less' : 'Read More';
+    }
+  };
 })();
 </script>
 
