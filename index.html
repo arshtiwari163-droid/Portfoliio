@@ -562,6 +562,38 @@ img{display:block;max-width:100%}
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
 }
 
+/* Centered Desktop Notice */
+.pre-desktop-notice {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+.notice-accent {
+  color: var(--r);
+  margin-right: 4px;
+  font-size: 8px;
+  display: inline-block;
+  vertical-align: middle;
+  animation: pulse-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
 /* Mobile Responsive Adapters for preloader & performance safeguards */
 @media (max-width: 768px) {
   #preloader {
@@ -585,6 +617,14 @@ img{display:block;max-width:100%}
   }
   .svc-scroll-card[data-service="07"]:hover .card-motion {
     filter: blur(2px);
+  }
+  .pre-desktop-notice {
+    bottom: 16px;
+    font-size: 7px;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: normal;
+    width: calc(100% - 56px);
+    line-height: 1.4;
   }
 }
 @media (max-width: 480px) {
@@ -3649,6 +3689,11 @@ img{display:block;max-width:100%}
       </div>
       <span class="hud-sub">EST_TIME // &lt; 0.1s</span>
     </div>
+  </div>
+
+  <!-- Centered Desktop Notice -->
+  <div class="pre-desktop-notice">
+    <span class="notice-accent">▲</span> [ RECOMMENDATION // RUN ON DESKTOP FOR OPTIMAL EXPERIENCE ]
   </div>
 
   <!-- Dummy elements to prevent JS errors -->
