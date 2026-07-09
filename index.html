@@ -2442,6 +2442,49 @@ img{display:block;max-width:100%}
 .test-thumb-1{background:linear-gradient(135deg,#62FF5F,#47E84C)}
 .test-thumb-2{background:linear-gradient(135deg,#ffffff,#98989b)}
 
+/* Testimonial mobile navigators */
+.test-nav-arrows {
+  display: none; /* Hidden on PC */
+}
+
+@media(max-width:768px) {
+  .test-thumbs {
+    display: none !important;
+  }
+  
+  .test-nav-arrows {
+    display: inline-flex;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  
+  .test-arrow-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--wh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  
+  .test-arrow-btn:active {
+    border-color: var(--r);
+    color: var(--r);
+    background: rgba(71, 232, 76, 0.05);
+  }
+  
+  .test-arrow-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 /* ═══════════════════════════════════════════════
    CONTACT / FOOTER
 ═══════════════════════════════════════════════ */
@@ -4948,6 +4991,16 @@ img{display:block;max-width:100%}
             <div class="auth-role" id="ta-role">Founder, TechStart Visakhapatnam</div>
           </div>
         </div>
+        <!-- Navigation Arrows for mobile view -->
+        <div class="test-nav-arrows">
+          <button class="test-arrow-btn" onclick="prevT()" aria-label="Previous Testimonial">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>
+          </button>
+          <button class="test-arrow-btn" onclick="nextT()" aria-label="Next Testimonial">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/></svg>
+          </button>
+        </div>
+
         <button class="remove-review-btn" id="remove-review" onclick="delReview()">
           Remove Review <span>✕</span>
         </button>
@@ -6212,6 +6265,20 @@ function renderThumbs() {
     cont.appendChild(div);
   });
 }
+
+window.prevT = function() {
+  if (!tData || tData.length === 0) return;
+  let nextIdx = currentT - 1;
+  if (nextIdx < 0) nextIdx = tData.length - 1;
+  setT(nextIdx);
+};
+
+window.nextT = function() {
+  if (!tData || tData.length === 0) return;
+  let nextIdx = currentT + 1;
+  if (nextIdx >= tData.length) nextIdx = 0;
+  setT(nextIdx);
+};
 
 window.setT = function(i){
   if(!tData || tData.length === 0) return;
