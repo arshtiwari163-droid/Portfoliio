@@ -1874,9 +1874,55 @@ img{display:block;max-width:100%}
     max-width: 100%;
   }
   .svc-cards-panel {
-    gap: 24px;
-    padding-bottom: 60px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 20px 24px 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     order: 1;
+    max-width: none;
+  }
+  .svc-cards-panel::-webkit-scrollbar {
+    display: none;
+  }
+  .svc-scroll-card {
+    flex: 0 0 280px;
+    max-width: 78vw;
+    scroll-snap-align: center;
+  }
+}
+
+/* Service slider dots/progress for mobile view */
+.svc-slider-indicator {
+  display: none;
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 20px auto 0;
+  position: relative;
+  border-radius: 1px;
+}
+
+.svc-indicator-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 12.5%;
+  background: var(--r);
+  border-radius: inherit;
+  transform: translateX(0);
+  transition: transform 0.1s ease;
+  box-shadow: 0 0 8px var(--r-glow);
+}
+
+@media (max-width: 900px) {
+  .svc-slider-indicator {
+    display: block;
   }
 }
 /* ═══════════════════════════════════════════════
@@ -4175,6 +4221,11 @@ img{display:block;max-width:100%}
 
       </div>
       
+      <!-- Interactive Mobile Scroll Progress Bar for Capabilities -->
+      <div class="svc-slider-indicator">
+        <div class="svc-indicator-fill" id="svcProgress"></div>
+      </div>
+      
       <!-- Right Column: Sticky Nav & Active Descriptions -->
       <div class="svc-sticky-panel">
         
@@ -5818,6 +5869,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Mobile horizontal swipe listener for services cards (syncs details + progress indicator)
+  const cardsPanel = document.querySelector('.svc-cards-panel');
+  if (cardsPanel) {
+    cardsPanel.addEventListener('scroll', () => {
+      if (window.innerWidth <= 900) {
+        const panelRect = cardsPanel.getBoundingClientRect();
+        const panelCenter = panelRect.left + panelRect.width / 2;
+        
+        let closestCard = null;
+        let minDiff = Infinity;
+        
+        scrollCards.forEach(card => {
+          const cardRect = card.getBoundingClientRect();
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          const diff = Math.abs(cardCenter - panelCenter);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestCard = card;
+          }
+        });
+        
+        if (closestCard) {
+          const num = closestCard.getAttribute('data-service');
+          updateStickyDetails(num);
+        }
+
+        // Update progress bar indicator
+        const maxScroll = cardsPanel.scrollWidth - cardsPanel.clientWidth;
+        if (maxScroll > 0) {
+          const scrollPct = cardsPanel.scrollLeft / maxScroll;
+          const svcProgress = document.getElementById('svcProgress');
+          if (svcProgress) {
+            svcProgress.style.transform = `translateX(${scrollPct * 700}%)`;
+          }
+        }
+      }
+    }, { passive: true });
+  }
 
   calculateArcCylinder();
   startAutoplay();
